@@ -16,7 +16,7 @@ int main(int argc, char* argv[]) {
     char errbuf[PCAP_ERRBUF_SIZE];
     pcap_t* handle = pcap_open_live(dev, BUFSIZ, 1, 1000, errbuf);
     if (handle == nullptr) {
-        fprintf(stderr, "pcap_open_live(%s) return nullptr - %s\n", dev, errbuf);
+		fprintf(stderr, "pcap_open_live(%s) return null - %s\n", dev, errbuf);
         return -1;
     }
 
