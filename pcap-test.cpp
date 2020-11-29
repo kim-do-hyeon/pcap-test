@@ -1,18 +1,31 @@
 #include <pcap.h>
 #include <stdio.h>
 
-void usage() {
-    printf("syntax: pcap-test <interface>\n");
-    printf("sample: pcap-test wlan0\n");
-}
+struct Param {
+	char *dev{nullptr};
+
+	bool parse(int argc, char* argv[]) {
+		if (argc != 2) {
+			usage();
+			return false;
+		}
+		dev = argv[1];
+		return true;
+	}
+
+	static void usage() {
+		printf("syntax: pcap-test <interface>\n");
+		printf("sample: pcap-test wlan0\n");
+	}
+};
+
 
 int main(int argc, char* argv[]) {
-    if (argc != 2) {
-        usage();
-        return -1;
-    }
+	Param param;
+	if (!param.parse(argc, argv))
+		return -1;
 
-    char* dev = argv[1];
+	char* dev = param.dev;
     char errbuf[PCAP_ERRBUF_SIZE];
     pcap_t* pcap = pcap_open_live(dev, BUFSIZ, 1, 1000, errbuf);
     if (pcap == nullptr) {
