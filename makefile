@@ -2,7 +2,7 @@ LDLIBS += -lpcap
 
 all: pcap-test
 
-pcap-test: pcap-test.cpp
+pcap-test: pcap-test.c
 
 clean:
 	rm -f pcap-test *.o

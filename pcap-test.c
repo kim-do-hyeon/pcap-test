@@ -1,33 +1,36 @@
 #include <pcap.h>
+#include <stdbool.h>
 #include <stdio.h>
 
-struct Param {
-	char* dev_{nullptr};
+void usage() {
+	printf("syntax: pcap-test <interface>\n");
+	printf("sample: pcap-test wlan0\n");
+}
 
-	bool parse(int argc, char* argv[]) {
-		if (argc != 2) {
-			usage();
-			return false;
-		}
-		dev_ = argv[1];
-		return true;
-	}
+typedef struct {
+	char* dev_;
+} Param;
 
-	static void usage() {
-		printf("syntax: pcap-test <interface>\n");
-		printf("sample: pcap-test wlan0\n");
-	}
+Param param  = {
+	.dev_ = NULL
 };
 
+bool parse(Param* param, int argc, char* argv[]) {
+	if (argc != 2) {
+		usage();
+		return false;
+	}
+	param->dev_ = argv[1];
+	return true;
+}
 
 int main(int argc, char* argv[]) {
-	Param param;
-	if (!param.parse(argc, argv))
+	if (!parse(&param, argc, argv))
 		return -1;
 
 	char errbuf[PCAP_ERRBUF_SIZE];
 	pcap_t* pcap = pcap_open_live(param.dev_, BUFSIZ, 1, 1000, errbuf);
-	if (pcap == nullptr) {
+	if (pcap == NULL) {
 		fprintf(stderr, "pcap_open_live(%s) return null - %s\n", param.dev_, errbuf);
 		return -1;
 	}
@@ -37,7 +40,7 @@ int main(int argc, char* argv[]) {
 		const u_char* packet;
 		int res = pcap_next_ex(pcap, &header, &packet);
 		if (res == 0) continue;
-		if (res == -1 || res == -2) {
+		if (res == PCAP_ERROR || res == PCAP_ERROR_BREAK) {
 			printf("pcap_next_ex return %d(%s)\n", res, pcap_geterr(pcap));
 			break;
 		}

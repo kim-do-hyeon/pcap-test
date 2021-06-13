@@ -3,5 +3,4 @@ CONFIG += console c++11
 CONFIG -= app_bundle
 CONFIG -= qt
 LIBS += -lpcap
-SOURCES += \
-	pcap-test.cpp
+SOURCES += pcap-test.c
