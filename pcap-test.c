@@ -11,7 +11,7 @@ typedef struct {
 	char* dev_;
 } Param;
 
-Param param  = {
+Param param = {
 	.dev_ = NULL
 };
 
