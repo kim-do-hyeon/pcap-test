@@ -46,3 +46,5 @@ Ethernet Header
     | - Payload (first 20 bytes):
 00 00 9d ec ab e1 00 02 8c 74 a2 66 00 00 00 00 bd 81 0b 00
 ```
+# OSI & TCP 구조
+![image](https://github.com/user-attachments/assets/c5031a02-f22a-4463-ac88-522387c586b7)
