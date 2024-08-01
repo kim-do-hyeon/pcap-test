@@ -76,8 +76,8 @@ int main(int argc, char* argv[]) {
                eth_hdr->ether_dhost[0], eth_hdr->ether_dhost[1], eth_hdr->ether_dhost[2],
                eth_hdr->ether_dhost[3], eth_hdr->ether_dhost[4], eth_hdr->ether_dhost[5]);
 		printf("       | - Destination Port        : %u\n", ntohs(tcp_hdr->th_dport));
-		printf("    |    \n");
-		printf("    | - Payload (first 20 bytes):\n");
+		printf("   |    \n");
+		printf("   | - Payload (first 20 bytes):\n");
 		print_hex(payload, payload_len);
     }
 
